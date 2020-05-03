@@ -37,7 +37,7 @@ class Automation:
                 os.mkdir(self.directoryName) 
                 os.chdir(self.directoryName)
                 self.directoryCreated = True
-                print(self.prompts[2] + "\n" + self.directoryName)
+                print(self.prompts[2] + "\n" + self.directoryName + "\n" + self.delimter)
                 self.gitInit()
         
         except OSError as e: #Shows if the dirertory exists
@@ -47,13 +47,14 @@ class Automation:
 
     def gitInit(self):
         self.fileName = os.path.join(self.directoryName, "autoGit.sh")
-        open(self.fileName, "a+").write("#!/usr/bin/sh \ngit init")
+        os.system('touch README.md')
+        open(self.fileName, "a+").write("#!/usr/bin/sh \ngit init\ngit add README.md\ngit commit -m Added\nhub create\ngit push -u origin master")
         self.f = Path(self.fileName)
         self.f.chmod(self.f.stat().st_mode | stat.S_IXUSR)
         os.system(self.fileName)
         
     def createFile(self): #Creates a file at a given directory
-        self.fileName = input(self.prompts[1])
+        self.fileName = input(self.delimter + "\n" + self.prompts[1])
         self.fileName = os.path.join(self.directoryName, self.fileName + self.extension)
         
         if not os.path.exists(self.fileName):
