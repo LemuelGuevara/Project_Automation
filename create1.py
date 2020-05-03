@@ -3,6 +3,8 @@
 import subprocess
 import os 
 import sys
+import stat
+from pathlib import Path
 
 class Automation: 
     directoryCreated = False
@@ -25,9 +27,6 @@ class Automation:
     def showDelimter(self):
         print(self.delimter)
 
-    # def gitInit(self):
-    #     subprocess.Popen(['/home/lemule/Documents/Python_Projects/Automation/Project_Automation/git.sh'])
-
     def createDirectory(self): #Creates a directory under the root path
         self.showDelimter()
         print(os.listdir(self.root))
@@ -35,16 +34,23 @@ class Automation:
         try:
             if not os.path.exists(self.directoryName): #Checks if the directory exits or not
                 self.directoryName = os.path.join(self.root + self.directoryName)
-                os.mkdir(self.directoryName)
-                # self.gitInit()
+                os.mkdir(self.directoryName) 
+                os.chdir(self.directoryName)
                 self.directoryCreated = True
                 print(self.prompts[2] + "\n" + self.directoryName)
+                self.gitInit()
         
         except OSError as e: #Shows if the dirertory exists
             if e.errno == 17:
                 print(self.delimter + "\nDirectory is made already.\n" + self.delimter + "\n")
                 error_17 = True
-                self.initMain()
+
+    def gitInit(self):
+        self.fileName = os.path.join(self.directoryName, "autoGit.sh")
+        open(self.fileName, "a+").write("#!/usr/bin/sh \ngit init")
+        self.f = Path(self.fileName)
+        self.f.chmod(self.f.stat().st_mode | stat.S_IXUSR)
+        os.system(self.fileName)
         
     def createFile(self): #Creates a file at a given directory
         self.fileName = input(self.prompts[1])
