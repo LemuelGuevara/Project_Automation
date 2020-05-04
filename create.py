@@ -3,8 +3,6 @@
 import subprocess
 import os 
 import sys
-import stat
-from pathlib import Path
 
 class Automation: 
     directoryCreated = False
