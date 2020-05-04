@@ -23,49 +23,51 @@ class Automation:
               "Press [2] to create file: ",
               ]
 
-    def createDirectory(self): #Creates a directory under the root path
+    def createDirectory(self): 
         print(self.delimeter, os.listdir(self.root), sep= "\n")
-        self.directoryName = input(self.delimeter + "\n" + self.prompts[0])
-        try:
-            if not os.path.exists(self.directoryName): #Checks if the directory exits or not
-                self.directoryName = os.path.join(self.root + self.directoryName) 
-                self.directoryCreated = True
-                os.mkdir(self.directoryName), os.chdir(self.directoryName), os.system("/usr/bin/autoGit.sh")
-                print(self.prompts[2], self.directoryName, self.delimeter, sep="\n")
+        self.directoryName = os.path.join(self.root, input(self.prompts[0]))
         
-        except OSError as e: #Shows if the dirertory exists
+        try:
+            if not os.path.exists(self.directoryName):
+                os.mkdir(self.directoryName), print(self.prompts[2], self.directoryName)
+                self.directoryCreated = True
+                os.chdir(self.directoryName), os.system("/usr/bin/autoGit.sh")
+        
+        except OSError as e:
             if e.errno == 17:
-                print(self.delimeter, "Directory is made already.", self.delimeter, sep="\n")
+                print("Directory is made already.")
                 error_17 = True
         
-    def createFile(self): #Creates a file at a given directory
+    def createFile(self): 
         self.fileName = input(self.prompts[1])
         self.fileName = os.path.join(self.directoryName, self.fileName + self.extension)
         
-        if not os.path.exists(self.fileName):
+        if not os.path.exists(self.fileName):  
             open(self.fileName, 'a').close()
-            subprocess.Popen([self.vsCodePath, self.directoryName, self.fileName])  
+            subprocess.Popen([self.vsCodePath, self.directoryName, self.fileName])
             print(self.prompts[3], self.fileName, sep="\n")
             sys.exit()
 
         else:
             os.path.exists(self.fileName)
-            print("File is already created.", self.delimter, sep="\n")
+            print("File is already created.")
             self.createFile()
 
     def createFileInExistingDir(self):
-        self.directoryName = os.path.join(self.root, input(self.delimeter + "\n" + self.prompts[4]))
+        self.directoryName = os.path.join(self.root, input(self.prompts[4]))
+        
         if os.path.exists(self.directoryName):
-            print(self.delimeter, os.listdir(self.directoryName), self.delimeter, sep="\n")
+            print(os.listdir(self.directoryName))
             self.createFile()
             sys.exit()
 
         else:
             self.createFileInExistingDir()
 
-class Main(Automation): #Initializes the script and shows the choices
+class Main(Automation): 
     def initMain(self): 
-        self.cur_input = input((self.prompts[5]) + '/' + (self.prompts[6]))
+        self.cur_input = input(self.prompts[5] + "/" + self.prompts[6])
+        
         if self.cur_input == "1":
             self.createDirectory()
             self.createFile()
