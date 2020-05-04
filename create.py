@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#!/usr/bin/bash
 import subprocess
 import os 
 import sys
@@ -10,12 +9,11 @@ class Automation:
     delimeter = "-"*80
     extension = ".py"
     root = "/home/lemule/Documents/Python_Projects/"
-    vsCodePath = "/usr/bin/subl"
+    txtEditorPath = "/usr/bin/subl"
     prompts = [
               "Create Directory: ",
               "Create File: ",
               "*Directory is made*",
-              "File Created.",
               "Choose Directory: ",
               "Press [1] to create directory",
               "Press [2] to create file: ",
@@ -42,17 +40,18 @@ class Automation:
         
         if not os.path.exists(self.fileName):  
             open(self.fileName, 'a').close()
-            subprocess.Popen([self.vsCodePath, self.directoryName, self.fileName])
-            print(self.prompts[3], self.fileName, sep="\n")
-            sys.exit()
+            print("File is created.", self.fileName, sep="\n")
 
         else:
             os.path.exists(self.fileName)
             print("File is already created.")
             self.createFile()
 
+        subprocess.Popen([self.txtEditorPath self.directoryName, self.fileName])
+        sys.exit()
+
     def createFileInExistingDir(self):
-        self.directoryName = os.path.join(self.root, input(self.prompts[4]))
+        self.directoryName = os.path.join(self.root, input(self.prompts[3]))
         
         if os.path.exists(self.directoryName):
             print(os.listdir(self.directoryName))
@@ -64,7 +63,7 @@ class Automation:
 
 class Main(Automation): 
     def initMain(self): 
-        self.cur_input = input(self.prompts[5] + "/" + self.prompts[6])
+        self.cur_input = input(self.prompts[4] + "/" + self.prompts[1])
         
         if self.cur_input == "1":
             self.createDirectory()
