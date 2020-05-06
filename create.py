@@ -47,7 +47,7 @@ class Automation:
             print("File is already created.")
             self.createFile()
 
-        subprocess.Popen([self.txtEditorPath self.directoryName, self.fileName])
+        subprocess.Popen([self.txtEditorPath, self.directoryName, self.fileName])
         sys.exit()
 
     def createFileInExistingDir(self):
