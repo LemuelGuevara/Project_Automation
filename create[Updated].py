@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 824b07637d0d8f3d9abd2f7d4e83d4d53aa896b7
 import os
 import sys
 import subprocess
@@ -53,4 +56,8 @@ class Automation:
 if __name__ == "__main__":
     auto = Automation()
     auto.getProject()
+<<<<<<< HEAD
     auto.makeProject()
+=======
+    auto.makeProject()
+>>>>>>> 824b07637d0d8f3d9abd2f7d4e83d4d53aa896b7
