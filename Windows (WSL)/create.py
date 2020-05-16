@@ -35,12 +35,13 @@ class Automation:
 
         try:
             os.mkdir(self.setProjectPath(1))
+            subprocess.Popen([self.txtEditorPath, self.setProjectPath(1)])
+            
             return self.makeReadmeAndFile()
 
         except Exception:
             print("Project already exists.")
             return self.getProject(), self.makeProject()
-
 
     def makeReadmeAndFile(self):    
         """Initializes a git repo along with a hub and some startup files"""
@@ -49,7 +50,6 @@ class Automation:
         for command in self.gitCommands:
             os.system(command)
 
-    
 if __name__ == "__main__":
     auto = Automation()
     auto.getProject()
