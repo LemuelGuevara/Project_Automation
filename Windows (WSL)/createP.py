@@ -5,23 +5,21 @@ import subprocess
 
 class Automation:
     gitCommands = [
-        "touch README.md",
-        "touch main.py",
         "git init",
+        "touch README.md",
         "git add .",
         ("git commit -m Added"),
         "hub create",
         "git push -u origin master"
+        "code ."
         ]
 
     root = "/mnt/c/Users/Lemue/Desktop/Python_Projects"
-    txtEditorPath = "/mnt/c/Users/Lemue/AppData/Local/Programs/Microsoft VS Code/bin/code"
-    prompt = "Create Project: "
 
     def getProject(self):
         """Gets the project name from the user"""
 
-        self.projectName = input(self.prompt)
+        self.projectName = input("Create Project: ")
         return self.setProjectPath(self.projectName)
 
     def setProjectPath(self, project):
